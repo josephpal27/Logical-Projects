@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stopwatch</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+
+        }
+
+        .container {
+            background-color: blueviolet;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .timeDisplay {
+            max-width: fit-content;
+            background-color: white;
+            padding: 0 1rem;
+            border-radius: 10px;
+            font-size: 6rem;
+            margin-bottom: 2rem;
+        }
+
+        #ms {
+            color: blueviolet;
+        }
+
+        .btn button {
+            font-size: 1.2rem;
+            color: blueviolet;
+            background-color: white;
+            border: none;
+            outline: none;
+            border-radius: 5px;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            font-weight: 600;
+            margin: 0 1.5rem;
+        }
+
+        #stop-btn {
+            color: red;
+        }
+
+        #start-btn {
+            color: rgb(9, 159, 9);
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="timeDisplay">
+            <span class="num" id="hr">00</span> <span>:</span>
+            <span class="num" id="min">00</span> <span>:</span>
+            <span class="num" id="sec">00</span> <span>:</span>
+            <span class="num" id="ms">00</span>
+        </div>
+
+        <div class="btn">
+            <!-- <button id="stop-btn">STOP</button> -->
+            <button id="start-btn">START</button>
+            <button id="reset-btn">RESET</button>
+        </div>
+
+    </div>
+
+
+
+    <script>
+
+        // let start_btn = document.getElementById('start-btn');
+        // let stop_btn = document.getElementById('stop-btn');
+        // let reset_btn = document.getElementById('reset-btn');
+
+        // start_btn.addEventListener('click', startTimer);
+        // stop_btn.addEventListener('click', stopTimer);
+        // reset_btn.addEventListener('click', resetTimer);
+
+        // let hr = min = sec = ms = '0' + 0;
+
+        // function startTimer() {
+        //     timer = setInterval(() => {
+        //         ms++;
+        //         if (ms < 10) {
+        //             ms = '0' + ms;
+        //         }
+
+        //         if (ms == 100) {
+        //             sec++
+        //             if (sec < 10) {
+        //                 sec = '0' + sec;
+        //             }
+
+        //             ms = '0' + 0;
+        //         }
+
+        //         if (sec == 60) {
+        //             min++
+        //             if (min < 10) {
+        //                 min = '0' + min;
+        //             }
+
+        //             sec = '0' + 0;
+        //         }
+
+        //         if (min == 60) {
+        //             hr++
+        //             if (hr < 10) {
+        //                 hr = '0' + hr;
+        //             }
+
+        //             min = '0' + 0;
+        //         }
+
+        //         document.getElementById('hr').innerText = hr;
+        //         document.getElementById('min').innerText = min;
+        //         document.getElementById('sec').innerText = sec;
+        //         document.getElementById('ms').innerText = ms;
+        //     }, 10)
+        // }
+
+
+        // function stopTimer() {
+        //     clearInterval(timer);
+        // }
+
+        // function resetTimer() {
+        //     clearInterval(timer);
+
+        //     hr = min = sec = ms = '0' + 0;
+        //     document.getElementById('hr').innerText = hr;
+        //     document.getElementById('min').innerText = min;
+        //     document.getElementById('sec').innerText = sec;
+        //     document.getElementById('ms').innerText = ms;
+        // }
+
+
+
+
+        // ---------------------------------- START/STOP in Same Button ----------------------------------- //
+
+
+        let startStopBtn = document.getElementById('start-btn');
+        let resetBtn = document.getElementById('reset-btn');
+
+        let timer;
+        let isRunning = false;
+        let hr = min = sec = ms = '0' + 0;
+
+        startStopBtn.addEventListener('click', function () {
+            if (isRunning) {
+                stopTimer();
+                startStopBtn.innerText = 'START';
+                startStopBtn.style.color = 'green';
+            } else {
+                startTimer();
+                startStopBtn.innerText = 'STOP';
+                startStopBtn.style.color = 'red';
+            }
+            isRunning = !isRunning;
+        });
+
+        resetBtn.addEventListener('click', resetTimer);
+
+        function startTimer() {
+            timer = setInterval(() => {
+                ms++;
+                if (ms < 10) {
+                    ms = '0' + ms;
+                }
+
+                if (ms == 100) {
+                    sec++;
+                    if (sec < 10) {
+                        sec = '0' + sec;
+                    }
+
+                    ms = '0' + 0;
+                }
+
+                if (sec == 60) {
+                    min++;
+                    if (min < 10) {
+                        min = '0' + min;
+                    }
+
+                    sec = '0' + 0;
+                }
+
+                if (min == 60) {
+                    hr++;
+                    if (hr < 10) {
+                        hr = '0' + hr;
+                    }
+
+                    min = '0' + 0;
+                }
+
+                document.getElementById('hr').innerText = hr;
+                document.getElementById('min').innerText = min;
+                document.getElementById('sec').innerText = sec;
+                document.getElementById('ms').innerText = ms;
+            }, 10);
+        }
+
+        function stopTimer() {
+            clearInterval(timer);
+        }
+
+        function resetTimer() {
+            clearInterval(timer);
+            isRunning = false;
+
+            hr = min = sec = ms = '0' + 0;
+            document.getElementById('hr').innerText = hr;
+            document.getElementById('min').innerText = min;
+            document.getElementById('sec').innerText = sec;
+            document.getElementById('ms').innerText = ms;
+
+            startStopBtn.innerText = 'START';
+            startStopBtn.style.color = 'green';
+        }
+
+    </script>
+
+
+</body>
+
+</html>
